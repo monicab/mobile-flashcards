@@ -1,39 +1,56 @@
 import React, { Component } from 'react'
+import PropTypes  from 'prop-types';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
+import { addDeck } from '../actions'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { purple, white } from '../utils/colors'
 
-import { saveDeckInStorage } from '../utils/api'
-import { addDeck } from '../actions'
-
 export class NewDeck extends Component {
+  static propTypes = {
+    addDeck: PropTypes.func.isRequired,
+  }
+
+  initialState = {
+    text: '',
+    error: ''
+  }
+
   constructor(props) {
     super(props);
-    this.state = { text: '' }
+    this.state = Object.assign({}, this.initialState)
   }
 
   createDeck = () => {
+    if (!this.state.text) {
+      this.setState(() => ({error: 'Please enter a title for your new deck'}));
+      return;
+    }
+
     const deck = {
       title: this.state.text,
       cards: [],
     }
-    saveDeckInStorage(deck).then((deck) => {
-      this.props.dispatch(addDeck(deck));
+    this.props.addDeck(deck).then(() => {
+      this.setState(() => (this.initialState));
       this.props.navigation.goBack();
-    })
+    });
   }
 
   render() {
     return (
       <View style={styles.center}>
-        <Text>What is the title of your new deck?</Text>
-        <View style={styles.row}>
-          <TextInput style={styles.input}
-                     placeholder={'Deck Title'}
-                     onChangeText={(text) => this.setState({text})}
-                     value={this.state.text}
-          />
+        <Text style={styles.title}>What is the title of your new deck?</Text>
+        <View>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.input}
+                       placeholder={'Deck Title'}
+                       onChangeText={(text) => this.setState({text})}
+                       value={this.state.text}
+            />
+            <Text style={styles.errorText}>{this.state.error}</Text>
+          </View>
         </View>
         <View>
           <TouchableOpacity style={styles.iosSubmitBtn}
@@ -49,23 +66,26 @@ export class NewDeck extends Component {
 const styles = StyleSheet.create({
   center: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
 
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+  title: {
+    fontSize: 30,
+    margin: 30,
+    textAlign: 'center',
+  },
+
+  inputContainer: {
+    margin: 40,
   },
 
   input: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    padding: 10,
-    flex: 1,
-    margin: 40,
     borderRadius: 5,
+    padding: 10,
   },
 
   iosSubmitBtn: {
@@ -82,6 +102,15 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
   },
+
+  errorText: {
+    color: 'red',
+  }
 });
 
-export default connect()(NewDeck)
+const mapStateToProps = null;
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ addDeck }, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NewDeck)

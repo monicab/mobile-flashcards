@@ -26,19 +26,13 @@ export class DeckDetails extends Component {
         <View style={{flex: 1, justifyContent: 'space-around'}}>
           <View>
             <TouchableOpacity style={styles.iosSubmitBtn}
-                              onPress={() => this.props.navigation.navigate(
-                                'AddCard',
-                                { deck }
-                              )}>
+                              onPress={() => this.props.navigation.navigate('AddCard', { deck })}>
               <Text style={styles.submitBtnText}>Add Card</Text>
             </TouchableOpacity>
           </View>
           <View>
             <TouchableOpacity style={styles.iosSubmitBtn}
-                              onPress={() => this.props.navigation.navigate(
-                                'Quiz',
-                                { deck }
-                              )}>
+                              onPress={() => this.props.navigation.navigate('Quiz', { deck })}>
               <Text style={styles.submitBtnText}>Start Quiz</Text>
             </TouchableOpacity>
           </View>
@@ -97,15 +91,4 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
   },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  space: {
-    flex: 1,
-    padding: 10
-  }
 })

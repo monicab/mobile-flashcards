@@ -1,4 +1,4 @@
-import { GET_DECKS, ADD_DECK, CLEAR_DECKS, SET_CURRENT_DECK } from '../actions'
+import { GET_DECKS, ADD_DECK, CLEAR_DECKS, SET_CURRENT_DECK, SET_DECKS } from '../actions'
 
 const initialState = {
   decks: {},
@@ -10,6 +10,11 @@ function decks(state = initialState, action) {
       return {
         ...state,
         decks: action.decks,
+      }
+    case SET_DECKS:
+      return {
+        ...state,
+        decks: action.decks
       }
     case ADD_DECK:
       return {

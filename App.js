@@ -1,9 +1,10 @@
 import React from 'react'
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './reducers'
+import { setLocalNotification } from './utils/helpers'
 
-import { StyleSheet, Text, View, StatusBar, Platform } from 'react-native'
+import store from './store'
+
+import { View, StatusBar, Platform } from 'react-native'
 
 import { Constants } from 'expo'
 import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation'
@@ -116,9 +117,13 @@ const MainNavigator = createStackNavigator({
 
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={store}>
         <View style={{flex: 1}}>
           <FlashCardsStatusBar backgroundColor={blue} barStyle="light-content" />
           <MainNavigator/>
