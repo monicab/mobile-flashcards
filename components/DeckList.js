@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import { DeckItem } from './DeckItem'
 
-import { getDecksFromStorage, clearAllDecksFromStorage } from '../utils/api'
-import { getDecks, clearDecks, setCurrentDeck } from '../actions'
+import { loadDecks, clearDecks, setCurrentDeck } from '../actions'
 import { purple, white } from '../utils/colors'
 
 export class DeckList extends Component {
   componentDidMount = () => {
-    getDecksFromStorage().then((decks) => {
-      this.props.dispatch(getDecks(decks));
-    });
+    this.props.loadDecks();
   }
 
   onPressDeck = (deck) => {
-    this.props.dispatch(setCurrentDeck(deck));
+
+    this.props.setCurrentDeck(deck);
     this.props.navigation.navigate(
       'DeckDetails',
       { deck: deck }
@@ -24,9 +23,7 @@ export class DeckList extends Component {
   }
 
   clearAllDecks = () => {
-    clearAllDecksFromStorage().then(() => {
-      this.props.dispatch(clearDecks())
-    })
+    this.props.clearDecks();
   }
 
   renderSeparator = () => {
@@ -43,19 +40,20 @@ export class DeckList extends Component {
 
   render() {
     return (
-      <View style={styles.row}>
-        <View containerStyle={{borderTopWidth: 0, borderBottomWidth: 0}}>
-          <FlatList
-            data={Object.values(this.props.decks || {})}
-            keyExtractor={item => '' + item.id}
-            renderItem={({item}) => (
-              <DeckItem deck={item} onPressDeck={this.onPressDeck}/>
-            )}
-            ItemSeparatorComponent={this.renderSeparator}
-          />
-
+      <View style={{flex: 1}}>
+        <View style={{flex: 10}}>
+          <View containerStyle={{borderTopWidth: 0, borderBottomWidth: 0}}>
+            <FlatList
+              data={Object.values(this.props.decks || {})}
+              keyExtractor={item => '' + item.id}
+              renderItem={({item}) => (
+                <DeckItem deck={item} onPressDeck={this.onPressDeck}/>
+              )}
+              ItemSeparatorComponent={this.renderSeparator}
+            />
+          </View>
         </View>
-        <View>
+        <View style={{flex: 1}}>
           <TouchableOpacity style={styles.iosSubmitBtn}
                             onPress={ this.clearAllDecks }>
             <Text style={styles.submitBtnText}>Clear All Decks</Text>
@@ -66,16 +64,20 @@ export class DeckList extends Component {
   }
 }
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => {
   const { decks } = state
-
   return {
     decks
   }
 }
 
+const mapDispatchToPros = (dispatch) => {
+  return bindActionCreators({ loadDecks, clearDecks, setCurrentDeck }, dispatch)
+}
+
 export default connect(
   mapStateToProps,
+  mapDispatchToPros,
 )(DeckList)
 
 const styles = StyleSheet.create({

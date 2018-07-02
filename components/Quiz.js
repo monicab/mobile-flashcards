@@ -62,6 +62,11 @@ export class Quiz extends Component {
     }
   }
 
+  getCounterText = (currentCardIndex, totalCards) => {
+    const current = (currentCardIndex < totalCards) ? currentCardIndex + 1 : totalCards;
+    return `${current} / ${totalCards} `
+  }
+
   render() {
     let {currentCardIndex, totalCorrect } = this.state;
     let { deck } = this.props.navigation.state.params;
@@ -72,7 +77,7 @@ export class Quiz extends Component {
     return (
       <View style={styles.container}>
         <View style={{flex: 1}}>
-          <Text style={styles.counter}>{this.state.currentCardIndex} / {totalCards} </Text>
+          <Text style={styles.counter}>{this.getCounterText(currentCardIndex, totalCards)} </Text>
         </View>
         <View style={{flex: 9}}>
           { !currentCard && totalCards > 0 && (

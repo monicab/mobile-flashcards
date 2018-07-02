@@ -55,11 +55,11 @@ export class QuizCard extends Component {
       <View style={{flex: 1}}>
         <View style={{flex: 2, alignItems: 'center'}}>
           <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-            <Text style={styles.question}> -- {card.question} -- </Text>
+            <Text style={styles.question}>{card.question}</Text>
             <Text style={styles.label} >Question</Text>
           </Animated.View>
           <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle]}>
-            <Text style={styles.answer}>-- {card.answer} --</Text>
+            <Text style={styles.answer}>{card.answer}</Text>
             <Text style={styles.label} >Answer</Text>
           </Animated.View>
         </View>
@@ -93,10 +93,12 @@ const styles = StyleSheet.create({
   },
   question: {
     fontSize: 40,
+    textAlign: 'center',
   },
   answer: {
     fontSize: 40,
     color: 'gray',
+    textAlign: 'center',
   },
 
   label: {
