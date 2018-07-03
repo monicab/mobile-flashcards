@@ -43,6 +43,12 @@ export const defaultStyles = {
     margin: 30,
     textAlign: 'center',
   },
+
+  subTitle: {
+    fontSize: 20,
+    color: 'gray',
+    textAlign: 'center',
+  },
 }
 
 export const getButtonStyle = () => {

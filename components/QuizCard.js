@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { red, green } from '../utils/colors'
 
-import { QuizSummary } from './QuizSummary'
+import { defaultStyles, getButtonStyle } from '../utils/styles'
 
 export class QuizCard extends Component {
   componentWillMount = () => {
@@ -95,13 +95,13 @@ export class QuizCard extends Component {
             <Text style={styles.flipLink} >FLIP CARD</Text>
           </TouchableOpacity>
           <View>
-            <TouchableOpacity style={[styles.iosSubmitBtn, styles.greenBtn]}
+            <TouchableOpacity style={[getButtonStyle(), styles.greenBtn]}
                               onPress={ onPressCorrect }>
               <Text style={styles.submitBtnText}>Correct</Text>
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity style={[styles.iosSubmitBtn, styles.redBtn]}
+            <TouchableOpacity style={[getButtonStyle(), styles.redBtn]}
                               onPress={ onPressIncorrect }>
               <Text style={styles.submitBtnText}>Incorrect</Text>
             </TouchableOpacity>
@@ -113,6 +113,7 @@ export class QuizCard extends Component {
 }
 
 const styles = StyleSheet.create({
+  ...defaultStyles,
   center: {
     flex: 1,
     alignItems: 'center',
@@ -131,38 +132,14 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'red',
+    color: red,
     margin: 20,
   },
-  iosSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-  AndroidSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
   greenBtn: {
-    backgroundColor: 'green',
+    backgroundColor: green,
   },
   redBtn: {
-    backgroundColor: 'red',
+    backgroundColor: red,
   },
   flipCard: {
     flex: 1,
@@ -180,12 +157,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
-
-  boxShadow: {
-    shadowColor: 'rgba(0,0,0,0.2)',
-    shadowOffset: { width: 0, height: 4},
-    shadowOpacity: 8,
-    borderWidth: 1,
-    elevation: 1,
-  }
 });
