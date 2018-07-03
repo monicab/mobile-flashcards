@@ -18,6 +18,16 @@ import { Quiz } from './components/Quiz'
 
 import { blue, white, purple, pink, gray } from './utils/colors'
 
+const navigationOptions = () => {
+  return {
+    headerTintColor: Platform.OS === 'ios' ? purple : white,
+    headerStyle:
+      {
+        backgroundColor: Platform.OS === 'ios' ? white : purple,
+      }
+  }
+}
+
 function FlashCardsStatusBar ({backgroundColor, ...props}) {
   return (
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -81,40 +91,20 @@ const MainNavigator = createStackNavigator({
   },
   DeckDetails: {
     screen: DeckDetails,
-    navigationOptions:
-      {
-        headerTintColor: white,
-        headerStyle:
-          {
-            backgroundColor: gray,
-          }
-      }
+    navigationOptions: navigationOptions()
   },
   Quiz: {
     screen: Quiz,
-    navigationOptions:
-      {
-        headerTintColor: white,
-        headerStyle:
-          {
-            backgroundColor: gray,
-          }
-      }
+    navigationOptions: navigationOptions()
   },
   AddCard: {
     screen: AddCard,
-    navigationOptions:
-      {
-        title: 'Add Card',
-        headerTintColor: white,
-        headerStyle:
-          {
-            backgroundColor: gray,
-          }
-      }
+    navigationOptions: {
+      ...navigationOptions(),
+      title: 'Add Card',
+    }
   }
 })
-
 
 export default class App extends React.Component {
   componentDidMount() {
