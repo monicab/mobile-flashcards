@@ -19,6 +19,9 @@ export class QuizCard extends Component {
       inputRange: [0, 180],
       outputRange: ['180deg', '360deg']
     });
+
+    this.opacityFrontAnimatedValue = new Animated.Value(1);
+    this.opacityBackAnimatedValue = new Animated.Value(0);
   }
 
   flipCard = () => {
@@ -27,11 +30,27 @@ export class QuizCard extends Component {
         toValue: 0,
         duration: 800
       }).start();
+      Animated.timing(this.opacityFrontAnimatedValue, {
+        toValue: 1,
+        duration: 800,
+      }).start();
+      Animated.timing(this.opacityBackAnimatedValue, {
+        toValue: 0,
+        duration: 800,
+      }).start();
     }
     else {
       Animated.timing(this.animatedValue, {
         toValue: 180,
         duration: 800
+      }).start();
+      Animated.timing(this.opacityFrontAnimatedValue, {
+        toValue: 0,
+        duration: 800,
+      }).start();
+      Animated.timing(this.opacityBackAnimatedValue, {
+        toValue: 1,
+        duration: 800,
       }).start();
     }
   }
@@ -47,6 +66,14 @@ export class QuizCard extends Component {
       transform: [
         { rotateY: this.backInterpolate }
       ]
+    };
+
+    const frontAnimatedOpacity = {
+      opacity: this.opacityFrontAnimatedValue
+    }
+
+    const backAnimatedOpacity = {
+      opacity: this.opacityBackAnimatedValue
     }
 
     let { card, onPressCorrect, onPressIncorrect} = this.props;
@@ -54,18 +81,18 @@ export class QuizCard extends Component {
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 2, alignItems: 'center'}}>
-          <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
+          <Animated.View style={[styles.flipCard, frontAnimatedStyle, frontAnimatedOpacity]}>
             <Text style={styles.question}>{card.question}</Text>
             <Text style={styles.label} >Question</Text>
           </Animated.View>
-          <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle]}>
+          <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, backAnimatedOpacity]}>
             <Text style={styles.answer}>{card.answer}</Text>
             <Text style={styles.label} >Answer</Text>
           </Animated.View>
         </View>
         <View style={{flex: 1, justifyContent: 'space-around'}}>
           <TouchableOpacity onPress={ this.flipCard }>
-            <Text style={styles.flipLink} >Flip Card!</Text>
+            <Text style={styles.flipLink} >FLIP CARD</Text>
           </TouchableOpacity>
           <View>
             <TouchableOpacity style={[styles.iosSubmitBtn, styles.greenBtn]}
@@ -141,7 +168,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backfaceVisibility: 'hidden',
   },
   flipCardBack: {
     position: 'absolute',
@@ -154,4 +180,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
+
+  boxShadow: {
+    shadowColor: 'rgba(0,0,0,0.2)',
+    shadowOffset: { width: 0, height: 4},
+    shadowOpacity: 8,
+    borderWidth: 1,
+    elevation: 1,
+  }
 });

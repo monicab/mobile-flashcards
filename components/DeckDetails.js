@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Platform, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { white, purple } from '../utils/colors'
 
 export class DeckDetails extends Component {
@@ -25,13 +25,13 @@ export class DeckDetails extends Component {
         </View>
         <View style={{flex: 1, justifyContent: 'space-around'}}>
           <View>
-            <TouchableOpacity style={styles.iosSubmitBtn}
+            <TouchableOpacity style={Platform.OS == 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
                               onPress={() => this.props.navigation.navigate('AddCard', { deck })}>
               <Text style={styles.submitBtnText}>Add Card</Text>
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity style={styles.iosSubmitBtn}
+            <TouchableOpacity style={Platform.OS == 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
                               onPress={() => this.props.navigation.navigate('Quiz', { deck })}>
               <Text style={styles.submitBtnText}>Start Quiz</Text>
             </TouchableOpacity>

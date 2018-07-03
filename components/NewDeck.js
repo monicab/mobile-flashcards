@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { addDeck } from '../actions'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { purple, white } from '../utils/colors'
 
 export class NewDeck extends Component {
@@ -40,7 +40,7 @@ export class NewDeck extends Component {
 
   render() {
     return (
-      <View style={styles.center}>
+      <KeyboardAvoidingView style={styles.center} behavior="padding" enabled>
         <Text style={styles.title}>What is the title of your new deck?</Text>
         <View>
           <View style={styles.inputContainer}>
@@ -58,7 +58,7 @@ export class NewDeck extends Component {
             <Text style={styles.submitBtnText}>Submit</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
