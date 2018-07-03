@@ -41,6 +41,12 @@ export class DeckList extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
+        <View style={{flex: 1, borderTopColor: 'pink', borderTopWidth: 1, paddingTop: 20, paddingBottom: 20, backgroundColor: 'white' }}>
+          <TouchableOpacity style={styles.iosSubmitBtn}
+                            onPress={ this.clearAllDecks }>
+            <Text style={styles.submitBtnText}>Clear All Decks</Text>
+          </TouchableOpacity>
+        </View>
         <View style={{flex: 10}}>
           <View containerStyle={{borderTopWidth: 0, borderBottomWidth: 0}}>
             <FlatList
@@ -52,12 +58,6 @@ export class DeckList extends Component {
               ItemSeparatorComponent={this.renderSeparator}
             />
           </View>
-        </View>
-        <View style={{flex: 1}}>
-          <TouchableOpacity style={styles.iosSubmitBtn}
-                            onPress={ this.clearAllDecks }>
-            <Text style={styles.submitBtnText}>Clear All Decks</Text>
-          </TouchableOpacity>
         </View>
       </View>
     )
