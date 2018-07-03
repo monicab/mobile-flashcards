@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native'
-import { purple, white } from '../utils/colors'
 
 import { QuizSummary } from './QuizSummary'
 import { QuizCard } from './QuizCard'
 
 export class Quiz extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: `${navigation.getParam('deck').title} Quiz`,
+    };
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -94,12 +99,6 @@ export class Quiz extends Component {
 }
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
   counter: {
     margin: 10,
     fontSize: 15,
@@ -111,17 +110,4 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
   },
-  flipCard: {
-    width: 200,
-    height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'blue',
-    backfaceVisibility: 'hidden',
-  },
-  flipCardBack: {
-    backgroundColor: 'red',
-    position: 'absolute',
-    top: 0,
-  }
 });

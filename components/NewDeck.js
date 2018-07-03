@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import { addDeck } from '../actions'
 import { KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { defaultStyles, getButtonStyle } from '../utils/styles'
 
 export class NewDeck extends Component {
   static propTypes = {
@@ -53,7 +53,7 @@ export class NewDeck extends Component {
           </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.iosSubmitBtn}
+          <TouchableOpacity style={getButtonStyle()}
                             onPress={ this.createDeck }>
             <Text style={styles.submitBtnText}>Submit</Text>
           </TouchableOpacity>
@@ -64,16 +64,12 @@ export class NewDeck extends Component {
 }
 
 const styles = StyleSheet.create({
+  ...defaultStyles,
+
   center: {
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
-  },
-
-  title: {
-    fontSize: 30,
-    margin: 30,
-    textAlign: 'center',
   },
 
   inputContainer: {
@@ -87,25 +83,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-
-  iosSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
-
-  errorText: {
-    color: 'red',
-  }
 });
 
 const mapStateToProps = null;

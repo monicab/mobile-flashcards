@@ -7,6 +7,7 @@ import { DeckItem } from './DeckItem'
 
 import { loadDecks, clearDecks, setCurrentDeck } from '../actions'
 import { purple, white } from '../utils/colors'
+import { defaultStyles, getButtonStyle } from '../utils/styles'
 
 export class DeckList extends Component {
   componentDidMount = () => {
@@ -41,8 +42,8 @@ export class DeckList extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={{flex: 1, borderTopColor: 'pink', borderTopWidth: 1, paddingTop: 20, paddingBottom: 20, backgroundColor: 'white' }}>
-          <TouchableOpacity style={styles.iosSubmitBtn}
+        <View style={[{flex: 1}, styles.topBar]}>
+          <TouchableOpacity style={getButtonStyle()}
                             onPress={ this.clearAllDecks }>
             <Text style={styles.submitBtnText}>Clear All Decks</Text>
           </TouchableOpacity>
@@ -81,27 +82,14 @@ export default connect(
 )(DeckList)
 
 const styles = StyleSheet.create({
-  center: {
+  ...defaultStyles,
+
+  topBar: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: 100,
-  },
-
-  iosSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
+    borderTopWidth: 1,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: 'white'
+  }
 
 });

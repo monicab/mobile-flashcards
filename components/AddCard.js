@@ -7,6 +7,8 @@ import { purple, white } from '../utils/colors'
 import { saveDeckInStorage } from '../utils/api'
 import { addDeck, setCurrentDeck } from '../actions'
 
+import { defaultStyles, getButtonStyle } from '../utils/styles'
+
 export class AddCard extends Component {
   constructor(props) {
     super(props);
@@ -65,7 +67,7 @@ export class AddCard extends Component {
           <Text style={styles.errorText}>{this.state.errors['answer']}</Text>
         </View>
         <View style={styles.row}>
-          <TouchableOpacity style={styles.iosSubmitBtn}
+          <TouchableOpacity style={getButtonStyle()}
                             onPress={ this.addCard }>
             <Text style={styles.submitBtnText}>Submit</Text>
           </TouchableOpacity>
@@ -86,14 +88,12 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(AddCard)
 
 const styles = StyleSheet.create({
+  ...defaultStyles,
+
   center: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  errorText: {
-    color: 'red',
   },
 
   input: {
@@ -104,24 +104,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  iosSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-
   row: {
     marginBottom: 30,
     marginLeft: 20,
     marginRight: 20,
-  },
-
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
   },
 });
